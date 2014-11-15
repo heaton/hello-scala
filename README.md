@@ -1,4 +1,4 @@
-hello-scala
+Hello Scala
 ===========
 
 Code demos on learning scala
