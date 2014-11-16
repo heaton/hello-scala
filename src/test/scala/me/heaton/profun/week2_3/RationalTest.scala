@@ -52,4 +52,31 @@ class RationalTest extends FunSuite {
     assert(r1.sub(r2, r3).result === 0)
   }
 
+  test("2/6 should be printed as 1/3") {
+    val r = new Rational(2, 6)
+    assert(r.toString === "1/3")
+  }
+
+  test("3/7 should be less then 3/6") {
+    val r1 = new Rational(3, 7)
+    val r2 = new Rational(3, 6)
+    assert(r1.less(r2))
+  }
+
+  test("max of 3/7 and 3/5 should be less then 3/5") {
+    val r1 = new Rational(3, 7)
+    val r2 = new Rational(3, 5)
+    assert(r1.max(r2) === r2)
+  }
+
+  test("it should throw an IllegalArgumentException when denominator is 0") {
+    intercept[IllegalArgumentException] {
+      new Rational(3, 0)
+    }
+  }
+
+  test("2 should be a rational without a denominator") {
+    var r = new Rational(2)
+    assert(r.result === 2)
+  }
 }
