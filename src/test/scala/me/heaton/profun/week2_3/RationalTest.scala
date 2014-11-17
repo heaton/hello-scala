@@ -76,7 +76,27 @@ class RationalTest extends FunSuite {
   }
 
   test("2 should be a rational without a denominator") {
-    var r = new Rational(2)
+    val r = new Rational(2)
     assert(r.result === 2)
   }
+
+  /**
+   * The following table lists the characters in increasing order of priority precedence:
+   * (all letters)
+   * |
+   * ^^
+   * &
+   * < >
+   * = !
+   * :
+   * + -
+   * * / %
+   * (all other special characters)
+   */
+  test("1/2*1/3 + 1/2*1/3 should be 1/3") {
+    val x = new Rational(1, 2)
+    val y = new Rational(1, 3)
+    assert(x * y + x * y == y)
+  }
+
 }

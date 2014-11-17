@@ -34,23 +34,37 @@ class Rational(x: Int, y: Int) {
    */
   def denom = y / g
 
-  def less(that: Rational) = this.numer * that.denom < that.numer * this.denom
+  def less(that: Rational) = this < that
+
+  def <(that: Rational) = this.numer * that.denom < that.numer * this.denom
 
   def max(that: Rational) = if (this.less(that)) that else this
 
-  def neg = new Rational(-numer, denom)
+  def unary_- : Rational = new Rational(-numer, denom)
 
-  def add(that: Rational) = new Rational(numer * that.denom + that.numer * denom, denom * that.denom)
+  def neg = -this
 
-  def sub(that: Rational) = add(that.neg)
+  def +(that: Rational) = new Rational(numer * that.denom + that.numer * denom, denom * that.denom)
 
-  def sub(that1: Rational, that2: Rational): Rational = sub(that1).sub(that2)
+  def add(that: Rational) = this + that
 
-  def mul(that: Rational) = new Rational(numer * that.numer, denom * that.denom)
+  def -(that: Rational) = this + -that
 
-  def div(that: Rational) = new Rational(numer * that.denom, denom * that.numer)
+  def sub(that: Rational) = this - that
 
-  def equal(that: Rational) = numer * that.denom == denom * that.numer
+  def sub(that1: Rational, that2: Rational): Rational = this - that1 - that2
+
+  def *(that: Rational) = new Rational(numer * that.numer, denom * that.denom)
+
+  def mul(that: Rational) = this * that
+
+  def /(that: Rational) = new Rational(numer * that.denom, denom * that.numer)
+
+  def div(that: Rational) = this / that
+
+  def ==(that: Rational) = numer * that.denom == denom * that.numer
+
+  def equal(that: Rational) = this == that
 
   def result: Double = {
     numer * 1.0 / denom
