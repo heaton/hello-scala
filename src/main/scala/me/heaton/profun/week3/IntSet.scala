@@ -29,7 +29,7 @@ class NonEmpty(elem: Int, left: IntSet, right: IntSet) extends IntSet {
     else if (x > elem) new NonEmpty(elem, left, right incl x)
     else this
 
-  override def union(other: IntSet): IntSet = ((left union other) union right) incl elem
+  override def union(other: IntSet): IntSet = left union (right union (other incl elem))
 
   override def toString = "{" + left + elem + right + "}"
 
