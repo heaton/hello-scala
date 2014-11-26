@@ -24,4 +24,10 @@ class ListTest extends FunSuite {
     }
   }
 
+  test("use can create a list by using") {
+    List()
+    List(1)
+    List(2, 3)
+  }
+
 }
