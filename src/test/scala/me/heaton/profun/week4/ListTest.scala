@@ -12,10 +12,15 @@ class ListTest extends FunSuite {
     else if (n === 0) xs.head
     else nth(n - 1, xs.tail)
 
-  val list = new Cons(1, new Cons(2, new Cons(3, new Nil)))
+  val list = new Cons(1, new Cons(2, new Cons(3, Nil)))
 
   test("the third element in the list should be 3") {
     assert(nth(2, list) === 3)
+  }
+
+  test("prepend 0 then to get third lement is 2") {
+    val ol = list.prepend(0)
+    assert(nth(2, ol) === 2)
   }
 
   test("should throw an IndexOutOfBoundsException when get an index out of the size") {
