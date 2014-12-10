@@ -48,6 +48,10 @@ class AListTest extends FunSuite with TestList {
     assert(AList.flatten(List(List(1, 1), 2, List(3, List(5, 8)))) === List(1, 1, 2, 3, 5, 8))
   }
 
+  test("list 7,6,4,3,9,2 should sort to 2,3,4,6,7,9 by merge sort") {
+    assert(AList.isort(List(7, 6, 4, 3, 9, 2)) === List(2, 3, 4, 6, 7, 9))
+  }
+
 }
 
 trait TestList {

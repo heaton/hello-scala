@@ -58,4 +58,28 @@ object AList {
     case y :: ys => y :: flatten(ys)
   }
 
+  /**
+   * merge sort, a faster way to sort. The idea is as follows:
+   * If the list consists of zero or one elements, it is already sorted. Otherwise,
+   * ▶ Separate the list into two sub-lists, each containing around half of the elements of the original list.
+   * ▶ Sort the two sub-lists.
+   * ▶ Merge the two sorted sub-lists into a single sorted list.
+   */
+  def msort(xs: List[Int]): List[Int] = {
+    val n = xs.length / 2
+    if (n == 0) xs
+    else {
+      def merge(xs: List[Int], ys: List[Int]): List[Int] =
+        (xs, ys) match {
+          case (Nil, ys) => ys
+          case (xs, Nil) => xs
+          case (x :: xt, y :: yt) =>
+            if(x < y) x :: merge(xt, ys)
+            else y :: merge(xs, yt)
+        }
+      val (fst, snd) = xs splitAt n
+      merge(msort(fst), msort(snd))
+    }
+  }
+
 }
