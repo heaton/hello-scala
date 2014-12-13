@@ -64,17 +64,24 @@ object AList {
    * ▶ Separate the list into two sub-lists, each containing around half of the elements of the original list.
    * ▶ Sort the two sub-lists.
    * ▶ Merge the two sorted sub-lists into a single sorted list.
+   *
+   * A function takes an implicit parameter of type T. The compiler will search an implicit definition that
+   * ▶ is marked implicit
+   * ▶ has a type compatible with T
+   * ▶ is visible at the point of the function call, or is defined in a companion object associated with T.
+   * If there is a single (most specific) definition, it will be taken as actual argument for the implicit parameter.
+   * Otherwise it’s an error. (Found nothing or more than one)
    */
-  def msort(xs: List[Int]): List[Int] = {
+  def msort[T](xs: List[T])(implicit ord: Ordering[T]): List[T] = {
     val n = xs.length / 2
     if (n == 0) xs
     else {
-      def merge(xs: List[Int], ys: List[Int]): List[Int] =
+      def merge(xs: List[T], ys: List[T]): List[T] =
         (xs, ys) match {
           case (Nil, ys) => ys
           case (xs, Nil) => xs
           case (x :: xt, y :: yt) =>
-            if(x < y) x :: merge(xt, ys)
+            if(ord.lt(x, y)) x :: merge(xt, ys)
             else y :: merge(xs, yt)
         }
       val (fst, snd) = xs splitAt n
