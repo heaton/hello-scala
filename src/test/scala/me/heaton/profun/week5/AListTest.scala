@@ -55,10 +55,37 @@ class AListTest extends FunSuite with TestList {
   test("list pear,apple,peach,orange,pineapple should sort to apple,orange,peach,pear,pineapple by merge sort") {
     assert(AList.msort(List("pear", "apple", "peach", "orange", "pineapple")) === List("apple", "orange", "peach", "pear", "pineapple"))
   }
+
+  test("map") {
+    assert((List(1, 2) map (_ + 1)) === List(2, 3))
+  }
+
+  test("filter") {
+    assert((al filter (_ > 0)) === List(2, 5, 7, 8))
+    assert((al filterNot (_ > 0)) === List(-2, -3))
+    assert((al partition (_ > 0)) ===(List(2, 5, 7, 8), List(-2, -3)))
+  }
+
+  test("take while") {
+    assert((al takeWhile (_ > 0)) === List(2, 5))
+    assert((al dropWhile (_ > 0)) === List(-2, 7, -3, 8))
+    assert((al span (_ > 0)) ===(List(2, 5), List(-2, 7, -3, 8)))
+  }
+
+  test("pack") {
+    assert(AList.pack(sl) === List(List("a", "a", "a"), List("b", "b"), List("c"), List("a")))
+  }
+
+  test("encode") {
+    assert(AList.encode(sl) === List(("a", 3), ("b", 2), ("c", 1), ("a", 1)))
+  }
+
 }
 
 trait TestList {
   val el = List()
   val l4 = List(1, 2, 3, 4)
   val lo = List(5, 6)
+  val al = List(2, 5, -2, 7, -3, 8)
+  val sl = List("a", "a", "a", "b", "b", "c", "a")
 }
