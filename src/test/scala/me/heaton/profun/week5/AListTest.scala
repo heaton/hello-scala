@@ -80,6 +80,24 @@ class AListTest extends FunSuite with TestList {
     assert(AList.encode(sl) === List(("a", 3), ("b", 2), ("c", 1), ("a", 1)))
   }
 
+  test("sum by reduce left") {
+    assert(AList.sum(el) === 0)
+    assert(AList.sum(l4) === 10)
+  }
+
+  test("product by fold left") {
+    assert(AList.product(el) === 1)
+    assert(AList.product(l4) === 24)
+  }
+
+  test("concat by flod right") {
+    assert(AList.concat2(l4, lo) === List(1, 2, 3, 4, 5, 6))
+  }
+
+  test("new reverse") {
+    assert(AList.reverse2(l4) === List(4, 3, 2, 1))
+  }
+
 }
 
 trait TestList {

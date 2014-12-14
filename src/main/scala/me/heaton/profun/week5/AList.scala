@@ -81,7 +81,7 @@ object AList {
           case (Nil, ys) => ys
           case (xs, Nil) => xs
           case (x :: xt, y :: yt) =>
-            if(ord.lt(x, y)) x :: merge(xt, ys)
+            if (ord.lt(x, y)) x :: merge(xt, ys)
             else y :: merge(xs, yt)
         }
       val (fst, snd) = xs splitAt n
@@ -99,4 +99,19 @@ object AList {
   def encode[T](xs: List[T]): List[(T, Int)] =
     pack(xs) map (ys => (ys.head, ys.length))
 
+  /**
+   * A short way to write functions: _
+   * Every _ represents a new parameter, going from left to right
+   */
+  def sum(xs: List[Int]): Int = (0 :: xs) reduceLeft (_ + _)
+
+  def product(xs: List[Int]): Int = (xs foldLeft 1)(_ * _)
+
+  /**
+   * can't use foldLeft
+   */
+  def concat2[T](xs: List[T], ys: List[T]): List[T] = (xs foldRight ys)(_ :: _)
+
+  def reverse2[T](xs: List[T]): List[T] = (xs foldLeft List[T]())((xs, x) => x :: xs)
+  
 }
