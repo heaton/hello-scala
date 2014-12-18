@@ -71,6 +71,24 @@ class CollectionsTest extends FunSuite with SomeInstances {
     assert(Colls.isPrime(4) === false)
     assert(Colls.isPrime(19) === true)
   }
+
+  test("pairs of nested sequences") {
+    assert(Colls.pairs(7) === Vector((2, 1), (3, 2), (4, 1), (4, 3), (5, 2), (6, 1), (6, 5)))
+  }
+
+  test("for expression") {
+    assert(
+      (for(p <- peoples if p.age < 30) yield p.name) ===
+      (peoples filter (p => p.age < 30) map (p => p.name)))
+  }
+
+  test("pairs by for expression") {
+    assert(Colls.pairsFromFor(7) === Colls.pairs(7))
+  }
+
+  test("scalar product by for expression") {
+    assert(Colls.scalarProductFromFor(Vector(4.0, 2.0), dous) === 8)
+  }
 }
 
 trait SomeInstances {
@@ -78,4 +96,6 @@ trait SomeInstances {
   val dous = Vector(1.0, 2.0, 4.0)
   val people = Vector("Bob", "James", "Peter")
   val s = "Hello World"
+  val peoples = List(People("Heaton", 31), People("Peng", 33), People("Juan", 27), People("Xinyu", 27))
 }
+
