@@ -6,7 +6,7 @@ import org.scalatest.junit.JUnitRunner
 import EightQueens._
 
 @RunWith(classOf[JUnitRunner])
-class CollectionsTest extends FunSuite {
+class EightQueensTest extends FunSuite {
 
   test("not safe if in same column") {
     assert(isSafe(1, 1 :: List()) === false)
