@@ -11,6 +11,10 @@ class BooksTest extends FunSuite {
     assert((Books findByAuthor "Bird,") === Set("Introduction to Functional Programming"))
   }
 
+  test("to find the titles of books whose author's name is Bird with find in high order function") {
+    assert((Books findByAuthorInHo "Bird,") === Set("Introduction to Functional Programming"))
+  }
+
   test("to find all the books which have the word Program in the title") {
     assert((Books findByTitle "Program") === Set("Introduction to Functional Programming",
       "Programming in Scala", "Structure and Interpretation of Computer Programs"))

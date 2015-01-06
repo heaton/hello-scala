@@ -24,6 +24,19 @@ object Books {
   def findByAuthor(name: String) =
     for (b <- books; a <- b.authors if a startsWith name) yield b.title
 
+  /**
+   * Translation of For
+   * It is based solely on the presence of the methods map, flatMap and withFilter.
+   * There are many types for which this is useful: arrays, iterators, databases, XML data, optional values, parsers, etc.
+   * - for (x <- e1) yield e2  >>  e1.map(x => e2)
+   * - for (x <- e1 if f; s) yield e2  >>  for (x <- e1.withFilter(x => f); s) yield e2
+   * - for (x <- e1; y <- e2; s) yield e3  >>  e1.flatMap(x => for (y <- e2; s) yield e3)
+   */
+  def findByAuthorInHo(name: String) =
+  //books.flatMap(b => for (a <- b.authors if a startsWith name) yield b.title)
+  //books.flatMap(b => for (a <- b.authors withFilter (a => a startsWith name)) yield b.title)
+    books.flatMap(b => b.authors withFilter (a => a startsWith name) map (_ => b.title))
+
   def findByTitle(title: String) =
     for (b <- books if b.title contains title) yield b.title
 
