@@ -1,19 +1,18 @@
 package me.heaton.profun.week6
 
 /**
- * x^3 - 2x +5 can be Map(0 -> 5, 1 -> -2, 3 -> 1)
+ * x3 - 2x +5 can be Map(0 -> 5, 1 -> -2, 3 -> 1)
  */
 object polynomial {
 
-  class Poly(val terms: Map[Int, Double]) {
+  class Poly(terms0: Map[Int, Double]) {
+    val terms = terms0 withDefaultValue 0.0
     def + (other: Poly) = new Poly(terms ++ (other.terms map adjust))
     def adjust(term: (Int, Double)): (Int, Double) = {
       val (exp, coeff) = term
-      terms get exp match {
-        case Some(coeff1) => exp -> (coeff + coeff1)
-        case None => term
-      }
+      exp -> (coeff + terms(exp))
     }
+
     override def toString =
       (for ((exp, coeff) <- terms.toList.sorted.reverse) yield coeff + "x^" + exp) mkString " + " replaceAll ("\\.0+x", "x") replaceAll ("x\\^0", "")
   }
