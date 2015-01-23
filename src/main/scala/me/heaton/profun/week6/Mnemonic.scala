@@ -4,7 +4,7 @@ import scala.io.Source
 
 object Mnemonic {
 
-  val inPath = getClass().getResource("/profun/linuxwords.txt");
+  val inPath = getClass().getResource("/profun/forcomp/linuxwords.txt");
 
   val in = Source.fromURL(inPath)
   val words = in.getLines().toList filter (_ forall (_.isLetter))
