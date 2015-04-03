@@ -13,10 +13,14 @@ class Floyd(graph: Graph) {
 
 class Graph(val input: String) {
 
-  val map: Map[String, Int] = input.split(",").map(_.trim).map(s => (s.dropRight(1), s.last.toString.toInt)).toMap.withDefaultValue(100)
+  val MAX = 100;
+
+  val map: Map[String, Map[String, Int]] = input.split(",").map(_.trim).groupBy(_.head.toString).mapValues({
+    case array => array.map(s => (s(1).toString, s.last.toString.toInt)).toMap.withDefaultValue(MAX)
+  })
 
   def notes: List[String] = input.filter(_.isLetter).distinct.map(_.toString).toList
 
-  def distance(from: String, to: String): Int = map(from + to)
+  def distance(from: String, to: String): Int = map(from)(to)
 
 }
