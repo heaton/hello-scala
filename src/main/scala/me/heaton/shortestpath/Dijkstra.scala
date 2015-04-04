@@ -1,5 +1,9 @@
 package me.heaton.shortestpath
 
+/**
+ * Detail for the algorithm
+ * https://zh.wikipedia.org/wiki/%E6%88%B4%E5%85%8B%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95
+ */
 class Dijkstra(val graph: Graph) {
 
   import Distance.MAX
