@@ -13,14 +13,21 @@ class Floyd(graph: Graph) {
 
 class Graph(val input: String) {
 
-  val MAX = 100;
+  import Distance.MAX
 
   val map: Map[String, Map[String, Int]] = input.split(",").map(_.trim).groupBy(_.head.toString).mapValues({
     case array => array.map(s => (s(1).toString, s.last.toString.toInt)).toMap.withDefaultValue(MAX)
   })
+
+  def note(s: String) = map(s)
 
   def notes: List[String] = input.filter(_.isLetter).distinct.map(_.toString).toList
 
   def distance(from: String, to: String): Int = map(from)(to)
 
 }
+
+object Distance {
+  val MAX = 100;
+}
+
