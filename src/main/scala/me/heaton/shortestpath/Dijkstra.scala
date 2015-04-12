@@ -6,28 +6,21 @@ package me.heaton.shortestpath
  */
 class Dijkstra(val graph: Graph) {
 
-  import Distance.MAX
-  
-  type NoteWeight = (String, Int)
+  def shortest(start: String, end: String): Option[Int] = calculate(end, graph.getEndNodesOf(start))
 
-  def initNotes(start: String) = graph.notes.map((_, MAX))
-
-  def shortest(start: String, end: String): Int = cal((start, 0), end, initNotes(start))
-
-  def cal(start: NoteWeight, end: String, aliveNotes: List[NoteWeight]): Int = aliveNotes match {
-    case (note, weight) :: _ if note == end && weight < MAX=> weight
-    case notes => {
-      val newNotes = mergeTo(notes dropWhile (_ == start), stepOut(start, notes.toMap)).sortBy(_._2)
-      cal(newNotes.head, end, newNotes)
+  def calculate(finalEnd: String, reachableNodes: List[Node]): Option[Int] = reachableNodes.sortBy(_.distance) match {
+    case Nil => None
+    case head :: _ if head.name == finalEnd => Some(head.distance)
+    case Node(name, thisDistance) :: tail => {
+      val newHeadLines = graph.getEndNodesOf(name).map(line => line.copy(distance = line.distance + thisDistance))
+      calculate(finalEnd, mergeWithMinDistance(tail, newHeadLines))
     }
   }
-  
-  def stepOut(start: NoteWeight, aliveNotes: Map[String, Int]): Map[String, Int] = for {
-    (note, weight) <- graph.map(start._1)
-  } yield (note, weight + start._2)
 
-  def mergeTo(aliveNotes: List[NoteWeight], other: Map[String, Int]): List[NoteWeight] = aliveNotes.map{
-    case (key, value) => (key, Math.min(value, other.getOrElse(key, MAX)))
+  private def mergeWithMinDistance(lines1: List[Node], lines2: List[Node]) = (lines1 ::: lines2).groupBy(_.name).toList.map {
+    case (name, items) => Node(name, items.map(_.distance).min)
   }
-  
+
 }
+
+case class Node(name: String, distance: Int)
