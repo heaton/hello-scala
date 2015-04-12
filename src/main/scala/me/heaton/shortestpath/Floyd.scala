@@ -18,17 +18,17 @@ class Floyd(graph: Graph) {
 
 class Graph(val input: String) {
 
-  private val inputLines = input.split(",").map(_.trim).toList.map {
+  private val inputEdges = input.split(",").map(_.trim).toList.map {
     _.toCharArray.map(_.toString) match {
       case Array(start, end, weight) => (start, Node(end, weight.toInt))
     }
   }
 
-  private val map: Map[String, List[Node]] = inputLines.groupBy(_._1).mapValues(_.map(_._2))
+  private val map: Map[String, List[Node]] = inputEdges.groupBy(_._1).mapValues(_.map(_._2))
 
   def getEndNodesOf(start: String): List[Node] = map.getOrElse(start, Nil)
 
-  def nodes: List[String] = inputLines.flatMap(line => Seq(line._1, line._2.name)).distinct
+  def nodes: List[String] = inputEdges.flatMap(line => Seq(line._1, line._2.name)).distinct
 
 }
 
