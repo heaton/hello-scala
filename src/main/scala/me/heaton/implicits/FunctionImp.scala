@@ -10,12 +10,6 @@ object FunctionImp {
     if(countable.count(a) > countable.count(b)) a
     else b
 
-  def getLarge2[T](a: T, b: T) = {
-    val countable = implicitly[Countable[T]]
-    if(countable.count(a) > countable.count(b)) a
-    else b
-  }
-
   implicit lazy val stringCounter = new Countable[String] {
     def count(t: String): Int = t.split(" ").length
   }
