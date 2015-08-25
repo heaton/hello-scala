@@ -1,4 +1,4 @@
-package me.heaton
+package me.heaton.implicits
 
 object HelloApp extends App {
   println("Hello App");
