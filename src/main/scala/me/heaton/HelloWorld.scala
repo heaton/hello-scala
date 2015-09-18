@@ -6,8 +6,4 @@ object HelloWorld {
     println("Hello, World!")
   }
   
-  def add(a: Int, b: Int) {
-    a + b
-  }
-
 }
