@@ -21,8 +21,8 @@ object FreeMonadTry {
   final case class FetchUser(userId: UserId) extends Request[User]
 
   object Request {
-    def pure[A](a: A): Free[Requestable, A] = Free.liftFC(Pure(a) : Request[A])
-    def fetchUser(userId: UserId): Free[Requestable, User] = Free.liftFC(FetchUser(userId) : Request[User])
+    def pure[A](a: A): Free[Requestable, A] = Free.liftFC(Pure(a))
+    def fetchUser(userId: UserId): Free[Requestable, User] = Free.liftFC(FetchUser(userId))
   }
 
   object ToyInterpreter extends (Request ~> Id.Id) {
