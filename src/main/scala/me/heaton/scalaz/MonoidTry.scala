@@ -4,8 +4,11 @@ object MonoidTry {
 
   //  def sum(xs: List[Int]): Int = xs.foldLeft(0) { _ + _ }
 
-  trait Monoid[A] {
+  trait SemiGroup[A] {
     def mappend(a1: A, a2: A): A
+  }
+
+  trait Monoid[A] extends SemiGroup[A]{
     def mzero: A
   }
 
