@@ -2,15 +2,13 @@ package me.heaton.spec2
 
 import org.specs2.matcher.{Expectable, Matcher}
 import org.specs2.mock.Mockito
-import org.specs2.mutable.Specification
+import org.specs2.mutable._
+import org.specs2.specification.Scope
 
-class SomeSpec extends Specification with Mockito{
-
-  def before = () => println("I'm before")
-  def after = () => println("You now see me")
+class SomeSpec extends Specification with Mockito {
 
   "Heaton" should {
-    "say hello to you" in {
+    "say hello to you" in{
       (List("Hello", "there!") mkString " ") === "Hello there!"
     }
   }
@@ -67,6 +65,25 @@ class SomeSpec extends Specification with Mockito{
       there was one(m).get(0)
       there was no(m).get(1)
     }
+
+    "has isolation with Scope" in new aScope {
+      list.size === 4
+    }
+
+    "has before and after" in new BA {
+      println("here is BA test")
+      1 === 1
+    }
+
+  }
+
+  trait aScope extends Scope {
+    val list = List(1, 2, 3, 4)
+  }
+
+  trait BA extends BeforeAfter {
+    def before = println("I'm before")
+    def after = println("You now see me")
   }
 
 }
