@@ -35,7 +35,7 @@ object Futures extends App{
     u <- usd
     r <- cnyRate
   } yield u * r
-  
+
   purchase onSuccess {
     case amount => println("Purchased " + amount + " CNY")
   }
@@ -56,7 +56,7 @@ object Futures extends App{
 
   val f3 = Future { 1 }
   val p = Promise[Int]()
-  p completeWith f
+  p completeWith f3
   p.future onSuccess {
     case x => println(x)
   }
