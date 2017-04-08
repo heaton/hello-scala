@@ -2,32 +2,33 @@ package me.heaton.shortestpath
 
 class Floyd(graph: Graph) {
 
-  def shortest(start: String, end: String) = cal(start, end, graph.notes)
+  def shortest(start: String, end: String) = calulate(start, end, graph.nodes)
 
-  def cal(start: String, end: String, notes: List[String]): Int = notes match {
-    case Nil => graph.distance(start, end)
-    case note :: rest => Math.min(cal(start, note, rest) + cal(note, end, rest), cal(start, end, rest))
+  def calulate(start: String, end: String, notes: List[String]): Option[Int] = notes match {
+    case Nil => graph.getEndNodesOf(start).find(_.name == end).map(_.distance)
+    case head :: rest => (calulate(start, head, rest), calulate(head, end, rest), calulate(start, end, rest)) match {
+      case (Some(a), Some(b), Some(c)) => Some(Seq(a + b, c).min)
+      case (Some(a), Some(b), _) => Some(a + b)
+      case (_, _, Some(c)) => Some(c)
+      case _ => None
+    }
   }
 
 }
 
 class Graph(val input: String) {
 
-  import Distance.MAX
+  private val inputEdges = input.split(",").map(_.trim).toList.map {
+    _.toCharArray.map(_.toString) match {
+      case Array(start, end, weight) => (start, Node(end, weight.toInt))
+    }
+  }
 
-  val map: Map[String, Map[String, Int]] = input.split(",").map(_.trim).groupBy(_.head.toString).mapValues({
-    case array => array.map(s => (s(1).toString, s.last.toString.toInt)).toMap.withDefaultValue(MAX)
-  })
+  private val map: Map[String, List[Node]] = inputEdges.groupBy(_._1).mapValues(_.map(_._2))
 
-  def note(s: String) = map(s)
+  def getEndNodesOf(start: String): List[Node] = map.getOrElse(start, Nil)
 
-  def notes: List[String] = input.filter(_.isLetter).distinct.map(_.toString).toList
+  def nodes: List[String] = inputEdges.flatMap(line => Seq(line._1, line._2.name)).distinct
 
-  def distance(from: String, to: String): Int = map(from)(to)
-
-}
-
-object Distance {
-  val MAX = 100;
 }
 
